@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Portfolio of Harsha V — Python, Django, AWS, and Web Development projects and experience." />
+  <title>Harsha V Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ----------------------------
+       Base & Theme
+    -----------------------------*/
+    :root {
+      --bg: #0b0f14;
+      --card: #121824;
+      --muted: #99a2b0;
+      --text: #e6ecf2;
+      --brand: #00e5a8;
+      --brand-2: #4ec9ff;
+      --accent: #ffd166;
+      --border: #1f2837;
+      --danger: #ff4d4f;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --radius: 16px;
+      --nav-height: 72px;
+    }
+    [data-theme="light"]{
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --muted: #5b6678;
+      --text: #0b0f14;
+      --brand: #0ea5e9;
+      --brand-2: #16a34a;
+      --accent: #7c3aed;
+      --border: #e5eaf1;
+      --shadow: 0 20px 30px rgba(0,0,0,.06);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(1120px, 92%); margin: 0 auto; }
+    .btn { display:inline-flex; align-items:center; gap:.6rem; padding:.9rem 1.2rem; border-radius: 999px; border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
+      color: var(--text); font-weight:600; transition: transform .15s ease, background .25s ease, border-color .25s ease;
+    }
+    .btn:hover { transform: translateY(-2px); border-color: var(--brand); }
+    .btn.primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color:#02121b; border-color: transparent; }
+    .tag { display:inline-flex; align-items:center; gap:.4rem; border:1px solid var(--border); padding:.35rem .6rem; border-radius:999px; font-size:.8rem; color:var(--muted); }
+
+    /* ----------------------------
+       Navigation
+    -----------------------------*/
+    .nav {
+        font-weight: bolder;
+      position: sticky; top:0; z-index: 1000; backdrop-filter: blur(10px);
+      background: color-mix(in oklab, var(--bg) 80%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner { height: var(--nav-height); display:flex; align-items:center; justify-content:space-between; font-weight: bolder; }
+    .brand { display:flex; align-items:center; gap:.75rem; font-weight:800; letter-spacing:.2px; }
+    .brand .dot { width:10px; height:10px; border-radius:50%; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow:0 0 18px var(--brand); }
+    .nav ul { list-style:none; display:flex; gap:1.2rem; padding:0; margin:0; align-items:center; }
+    .nav a.link { padding:.5rem .9rem; border-radius: 10px; color: var(--muted); border:1px solid transparent; }
+    .nav a.link.active, .nav a.link:hover { color: var(--text); border-color: var(--border); background: rgba(255,255,255,.03); }
+    .theme-toggle, .menu-toggle { width:42px; height:42px; display:grid; place-items:center; border:1px solid var(--border); border-radius:12px; background: var(--card); cursor:pointer; }
+    .menu-toggle { display:none; }
+
+    /* ----------------------------
+       Sections
+    -----------------------------*/
+    section { padding: clamp(56px, 8vw, 110px) 0; }
+    .section-head { display:flex; align-items:end; justify-content:space-between; gap:1rem; margin-bottom: 2rem; }
+    .section-head h2 { font-size: clamp(1.6rem, 3.3vw, 2.4rem); margin:0; }
+    .muted { color: var(--muted); }
+
+    /* ----------------------------
+       Hero
+    -----------------------------*/
+    .hero { display:flex; grid-template-columns: 1.3fr 1fr; gap: clamp(24px, 4vw, 56px); align-items:center; }
+    .hero h1 { font-size: clamp(2rem, 6.2vw, 3.8rem); line-height:1.1; margin:.2rem 0 1rem; }
+    .hero p { font-size: clamp(1rem, 1.6vw, 1.15rem); color: var(--muted); }
+    .hero-card { background: radial-gradient(1000px 300px at -10% -20%, rgba(78,201,255,.06), transparent), var(--card); border:1px solid var(--border); border-radius: var(--radius); padding: clamp(20px, 3vw, 36px); box-shadow: var(--shadow); }
+    .socials { display:flex; gap:.7rem; }
+    .socials a { width:42px; height:42px; display:grid; place-items:center; border:1px solid var(--border); border-radius:12px; background: var(--card); }
+    .hero-illus { position:relative; }
+    .hero-illus .card {
+      background: conic-gradient(from 180deg at 50% 50%, rgba(0,229,168,.14), rgba(78,201,255,.08), rgba(124,58,237,.10));
+      border:1px solid var(--border); border-radius: var(--radius); padding: 18px; height: 100%; display:grid; place-items:center; box-shadow: var(--shadow);
+    }
+    .code {
+      width:100%; background: #0b1220; color:#d1e7ff; border-radius: 14px; border:1px solid #1c2537; font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      padding: 16px; font-size: 13.5px; overflow:auto; max-height: 360px;
+    }
+
+    /* ----------------------------
+       About
+    -----------------------------*/
+    .about { display:grid; grid-template-columns: 1fr 1.2fr; gap: clamp(24px, 4vw, 56px); align-items:center; }
+    .about .card { background: var(--card); border:1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+    .about .stats { display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
+    .about .stat { background: rgba(255,255,255,.03); border:1px solid var(--border); padding: 16px; border-radius: 14px; text-align:center; }
+    .about .stat h3 { margin:.2rem 0 0; font-size:1.4rem; }
+    .about .stat p { margin:0; color:var(--muted); font-size:.9rem; }
+
+    /* ----------------------------
+       Skills
+    -----------------------------*/
+    .skills-grid { display:grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+    .skill { border:1px solid var(--border); background: var(--card); padding: 14px; border-radius: 14px; display:flex; flex-direction:column; gap:.4rem; }
+    .skill b { font-size: .95rem; }
+    .meter { height: 8px; background: #0f1725; border-radius:999px; overflow:hidden; border:1px solid #1f2840; }
+    .meter > i { display:block; height:100%; width:0; background: linear-gradient(90deg, var(--brand), var(--brand-2)); border-radius:inherit; }
+
+    /* ----------------------------
+       Projects
+    -----------------------------*/
+    .projects-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .project { background: var(--card); border:1px solid var(--border); border-radius: 18px; overflow:hidden; box-shadow: var(--shadow); display:flex; flex-direction:column; }
+    .project .thumb { aspect-ratio: 16/9; background:#0e1422; display:grid; place-items:center; }
+    .project .body { padding: 16px; display:flex; flex-direction:column; gap:.6rem; }
+    .project .links { display:flex; gap:.6rem; margin-top:auto; }
+
+    /* ----------------------------
+       Timeline
+    -----------------------------*/
+    .timeline { position:relative; }
+    .timeline::before { content:""; position:absolute; left:12px; top:0; bottom:0; width:2px; background: linear-gradient(var(--brand), var(--brand-2)); opacity:.5; }
+    .t-item { position:relative; padding-left: 48px; margin: 0 0 22px; }
+    .t-item::before { content:""; position:absolute; left:6px; top:.25rem; width:14px; height:14px; border-radius:50%; background: var(--card); border:2px solid var(--brand); box-shadow: 0 0 0 4px rgba(0,229,168,.1); }
+    .t-item .card { background: var(--card); border:1px solid var(--border); border-radius: 14px; padding: 16px; }
+
+    /* Contact Section */
+#contact {
+  background-color: #171818;  /* dark navy */
+  color: #111111;
+  padding: 40px 20px;
+}
+
+.contact-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.address-info {
+  flex: 1;
+  min-width: 250px;
+  color: black;
+}
+
+.address {
+  margin-bottom: 20px;
+}
+
+.address h3 {
+  font-size: 25px;
+  margin-bottom: 5px;
+  color: #f1f1f1;
+}
+
+.address p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+/* Social Icons */
+.social-icons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-size: 24px;
+}
+
+.social-icons a {
+  color: #ddd;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #ff9800; /* highlight color */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .social-icons {
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
+
+
+    /* ----------------------------
+       Footer
+    -----------------------------*/
+    footer { border-top:1px solid var(--border); padding: 24px 0 40px; color: var(--muted); }
+
+    /* ----------------------------
+       Utilities
+    -----------------------------*/
+    .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .gap-1 { gap: .6rem; } .gap-2 { gap: 1rem; } .gap-3 { gap: 1.6rem; }
+    .row { display:flex; align-items:center; gap:.8rem; }
+    .hidden { display:none !important; }
+    .reveal { opacity:0; transform: translateY(20px); transition: all .6s ease; }
+    .reveal.in { opacity:1; transform: none; }
+
+    /* ----------------------------
+       Responsive
+    -----------------------------*/
+    @media (max-width: 1024px){
+      .skills-grid { grid-template-columns: repeat(3, 1fr); }
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .about, .hero { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px){
+      :root{ --nav-height: 64px; }
+      .nav ul { position: absolute; left:0; right:0; top: var(--nav-height); background: var(--card); border-bottom:1px solid var(--border); padding: 10px; display:none; }
+      .nav ul.open { display:block; }
+      .menu-toggle { display:grid; }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      .projects-grid { grid-template-columns: 1fr; }
+      .contact { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items:flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <!-- =========================== NAV =========================== -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#home" aria-label="Home">
+        
+        <span>PORTFOLIO<span class="muted"></span></span>
+      </a>
+      <ul id="navLinks" aria-label="Primary">
+        <li><a class="link" href="#home">Home</a></li>
+        <li><a class="link" href="#about">About</a></li>
+        <li><a class="link" href="#skills">Skills</a></li>
+        <li><a class="link" href="#projects">Projects</a></li>
+        <li><a class="link" href="#experience">Experience</a></li>
+        <li><a class="link" href="#contact">Contact</a></li>
+      </ul>
+      <div class="row">
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+          <!-- sun/moon icon -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </button>
+        <button id="menuToggle" class="menu-toggle" aria-label="Open menu" title="Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =========================== HERO =========================== -->
+  <section id="home" class="container">
+    <div class="hero">
+      <div class="hero-card reveal">
+        <span class="tag">Hey, I'm Harsha</span>
+        <h1>Python Full Stack & Cloud Developer building clean, scalable solutions.</h1>
+        <p>I am a motivated Electronics & Communication Engineering student with practical experience in <b>Python</b>, <b>Django</b>, and <b>AWS cloud services</b>. 
+            Skilled in <b>software development, web technologies, databases, and REST APIs</b>, I aim to apply my technical expertise and problem-solving abilities 
+            to build innovative software and cloud-based solutions. I enjoy turning ideas into fast, reliable software that's delightful to use.
+        </p>
+        <div class="row gap-2" style="margin:1.1rem 0 1.2rem">
+          <a class="btn" href="harsha-naidu.pdf" download target="_blank">Download CV</a>
+        </div>
+        <div class="socials">
+          <a href="https://github.com/Harshanaidu6" target="_blank" aria-label="GitHub">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12.4c0 5.26 3.41 9.72 8.15 11.3.6.1.82-.27.82-.58v-2.03c-3.32.73-4.02-1.6-4.02-1.6-.55-1.42-1.35-1.8-1.35-1.8-1.1-.77.08-.76.08-.76 1.21.09 1.85 1.26 1.85 1.26 1.08 1.87 2.83 1.33 3.52 1.02.11-.8.43-1.33.78-1.63-2.65-.31-5.44-1.35-5.44-6.02 0-1.33.47-2.41 1.24-3.26-.13-.31-.54-1.56.12-3.25 0 0 1.01-.33 3.3 1.24a11.3 11.3 0 0 1 6 0c2.3-1.57 3.3-1.24 3.3-1.24.66 1.7.25 2.94.12 3.25.77.85 1.24 1.93 1.24 3.26 0 4.68-2.8 5.7-5.47 6 .44.38.83 1.13.83 2.29v3.39c0 .32.21.7.83.58A11.5 11.5 0 0 0 23.5 12.4 11.5 11.5 0 0 0 12 .5Z"/></svg>
+          </a>
+          <a href="http://www.linkedin.com/in/harsha-v-naidu/" target="_blank" aria-label="LinkedIn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8.5h4V24h-4V8.5Zm7 0h3.8v2.1h.05c.53-1 1.85-2.1 3.8-2.1 4.07 0 4.82 2.68 4.82 6.2V24h-4v-7.2c0-1.72-.03-3.9-2.38-3.9-2.38 0-2.74 1.86-2.74 3.78V24h-4V8.5Z"/></svg>
+          </a>
+          <a href="mailto:harshavnaidu06@gmail.com" aria-label="Email">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="hero-illus reveal">
+        <!-- <div class="card">
+          <pre class="code"><code>// quick peek — profile.ts
+export const profile = {
+  name: "Harsha V",
+  role: "Python & AWS Developer",
+  location: "Bengaluru, IN",
+  skills: ["Python", "Django", "AWS", "EC2", "Lambda", "S3", "Docker"],
+  interests: ["APIs", "Automation", "Data Pipelines"],
+};
+
+function currently() {
+  return `Building cloud automations with ${profile.skills[0]} + AWS ☁️`;
+}
+
+console.log(currently());</code></pre> -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== ABOUT =========================== -->
+  <section id="about" class="container">
+    <div class="section-head">
+      <h2>About</h2>
+      <!-- <p class="muted">A snapshot of who I am and how I work.</p> -->
+    </div>
+    <div class="about">
+      <div class="card reveal">
+        <img src="passport.jpg" alt="Harsha portrait" style="border-radius:12px; border:1px solid var(--border);">
+      </div>
+      <div class="card reveal">
+        <h3>Developer focused on clarity, performance & DX</h3>
+        <p>I build backend services, REST APIs and dashboards. I care about clean architecture, great documentation and developer experience. Recently I’ve been exploring serverless patterns with <b>AWS Lambda</b> and observability with <b>CloudWatch</b>.</p>
+        <div class="about stats">
+          <div class="stat"><h3>4+</h3><p>Projects</p></div>
+          <div class="stat"><h3>3</h3><p>Certs/Badges</p></div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== SKILLS =========================== -->
+  <section id="skills" class="container">
+    <div class="section-head">
+      <h2>Skills</h2>
+      <p class="muted">Core technologies I use regularly.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill reveal"><b>Python</b><span class="muted">Advanced</span><div class="meter"><i style="width:92%"></i></div></div>
+      <div class="skill reveal"><b>Django</b><span class="muted">Intermediate</span><div class="meter"><i style="width:88%"></i></div></div>
+      <div class="skill reveal"><b>AWS (EC2, S3, Lambda)</b><span class="muted">Intermediate</span><div class="meter"><i style="width:75%"></i></div></div>
+
+      <div class="skill reveal"><b>SQL</b><span class="muted">Intermediate</span><div class="meter"><i style="width:76%"></i></div></div>
+      <div class="skill reveal"><b>HTML/CSS/JS</b><span class="muted">Advanced</span><div class="meter"><i style="width:90%"></i></div></div>
+    </div>
+  </section>
+
+  <!-- =========================== PROJECTS =========================== -->
+  <section id="projects" class="container">
+    <div class="section-head">
+      <h2>Featured Projects</h2>
+      <div class="row gap-1">
+        <!-- <span class="tag">Open-source</span>
+        <span class="tag">Client work</span>
+        <span class="tag">Personal</span> -->
+      </div>
+    </div>
+    <div class="projects-grid">
+      <!-- Project 1 -->
+      <article class="project reveal">
+        <div class="thumb"><img src="background.jpeg" alt="Hospital Management System"/></div>
+        <div class="body">
+          <h3>Hospital Management System</h3>
+          <p class="muted">A Django dashboard for monitoring Patients and Doctors Appointments and managing schedules.</p>
+          <div class="row gap-1">
+            <span class="tag">Django</span>
+            <span class="tag">MySQL</span>
+            
+          </div>
+          
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project reveal">
+        <div class="thumb"><img src="E-commerce.jpeg" alt="E-Commerce"/></div>
+        <div class="body">
+          <h3>E-Commerce</h3>
+          <p class="muted">Built a E-Commerce website Using Django, AWS Lambda, and S3.</p>
+          <div class="row gap-1">
+            <span class="tag">AWS Lambda</span>
+            <span class="tag">S3</span>
+            <span class="tag">Django</span>
+          </div>
+         
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="project reveal">
+        <div class="thumb"><img src="port.jpeg" alt="Portfolio"/></div>
+        <div class="body">
+          <h3>Developer Portfolio</h3>
+          <p class="muted">Fully responsive portfolio template (this one!) with dark/light mode, smooth scroll, and reveal animations.</p>
+          <div class="row gap-1">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+          </div>
+          
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- =========================== EXPERIENCE =========================== -->
+  <section id="experience" class="container">
+    <div class="section-head">
+      <h2>Experience & Education</h2>
+      <p class="muted">Where I’ve learned and contributed.</p>
+    </div>
+    <div class="timeline">
+      <div class="t-item reveal">
+        <div class="card">
+          <div class="row" style="justify-content:space-between">
+            <b>Cloud Intern — AWS</b>
+            <span class="muted">Jan 2024 – Apr 2024</span>
+          </div>
+          <p>Automated S3 lifecycle policies and built a small serverless API using API Gateway + Lambda + EC2.</p>
+          <div class="row gap-1">
+            <span class="tag">AWS</span>
+            <span class="tag">Python</span>
+           
+          </div>
+        </div>
+      </div>
+      <div class="t-item reveal">
+        <div class="card">
+          <div class="row" style="justify-content:space-between">
+            <b>B.E. — Electronics & Communication</b>
+            <span class="muted">2022 – 2025</span>
+          </div>
+          <p>Graduated with projects in embedded systems and cloud applications.</p>
+          <div class="row gap-1">
+            
+            <span class="tag">Python</span>
+            <span class="tag">Cloud</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== CONTACT =========================== -->
+  <section id="contact">
+  <div class="contact-container">
+    <!-- Left Side -->
+    <div class="address-info">
+      <div class="address">
+        <h3>Permanent Address:</h3>
+        <p>Gandhinagar 4th near Varthakara Bhavana ,<br>
+         Chikmagaluru, Chickmagalur, Karnataka - 577101</p>
+      </div>
+
+      <div class="address">
+        <h3>Current Address:</h3>
+        <p>No.51/26A, Govindaraja Nagar Ward, Baseaveshwara HBCS Layout,Vijayanagar, Bengaluru, Karnataka 560040<br>
+        Vijaya Nagar, Bangalore - 560040</p>
+      </div>
+    </div>
+
+    <!-- Right Side -->
+    <!-- <div class="social-icons">
+      <a href="tel:+918088382969"><i class="fas fa-phone"></i></a>
+      <a href="mailto:harshavnaidu06@gmail.com"><i class="fas fa-envelope"></i></a>
+      <a href="https://linkedin.com/in/harsha-v-naidu" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/harshanaidu06" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+  </div> -->
+</section>
+
+
+  <!-- <section id="contact" class="container">
+
+    <div class="section-head">
+      <h2>Contact</h2>
+      <p class="muted">Let’s build something great together.</p>
+    </div>
+    <div class="contact">
+      <div class="hero-card reveal">
+        <h3>Start a conversation</h3>
+        <p class="muted">Have a role, freelance project or collaboration in mind? I typically respond within 24 hours.</p>
+        <div class="row gap-2" style="margin-top:10px">
+          <a class="btn" href="mailto:harshav@example.com">harshav@example.com</a>
+          <a class="btn" href="tel:+918088382969">+91 80883 82969</a>
+        </div>
+      </div>
+      <form class="reveal" onsubmit="event.preventDefault(); openMailto(this)">
+        <div class="grid-2">
+          <input name="name" aria-label="Name" placeholder="Your name" required />
+          <input type="email" name="email" aria-label="Email" placeholder="you@example.com" required />
+        </div>
+        <input name="subject" aria-label="Subject" placeholder="Subject" required />
+        <textarea name="message" aria-label="Message" placeholder="Write your message…" required></textarea>
+        <div class="row" style="justify-content:space-between">
+          <div class="row gap-1">
+            <span class="tag">Avg. reply: 1 day</span>
+            <span class="tag">Timezone: IST (UTC+5:30)</span>
+          </div>
+          <button class="btn primary" type="submit">Send Message</button>
+        </div>
+      </form>
+    </div>
+  </section> -->
+
+  <footer>
+    <div class="container row" style="justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+      <span>© <span id="year"></span> Harsha V. All rights reserved.</span>
+      <div class="row gap-1">
+        <a class="tag" href="#home">Back to top ↑</a>
+        <a class="tag" href="harsha-naidu.pdf" download target="_blank">Resume PDF</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ========================= THEME =========================
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const storedTheme = localStorage.getItem('theme');
+    if(storedTheme){ document.documentElement.setAttribute('data-theme', storedTheme); }
+
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
+    // Default to dark if nothing stored
+    if(!storedTheme){ document.documentElement.setAttribute('data-theme', 'dark'); }
+
+    // ========================= MOBILE MENU =========================
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', ()=> navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=> navLinks.classList.remove('open')));
+
+    // ========================= ACTIVE LINK ON SCROLL =========================
+    const sections = [...document.querySelectorAll('section[id]')];
+    const navAnchors = [...document.querySelectorAll('.nav a.link')];
+
+    const onScroll = () => {
+      const y = window.scrollY + (window.innerHeight * 0.28);
+      let current = sections[0].id;
+      for(const sec of sections){
+        if(y >= sec.offsetTop) current = sec.id;
+      }
+      navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    };
+    document.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('load', onScroll);
+
+    // ========================= REVEAL ANIMATIONS =========================
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e => {
+        if(e.isIntersecting){ e.target.classList.add('in'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ========================= CONTACT FORM (mailto) =========================
+    function openMailto(form){
+      const name = encodeURIComponent(form.name.value.trim());
+      const email = encodeURIComponent(form.email.value.trim());
+      const subject = encodeURIComponent(form.subject.value.trim());
+      const message = encodeURIComponent(form.message.value.trim());
+      const body = encodeURIComponent(`Hi Harsha,\n\n${form.message.value}\n\n— ${form.name.value} (${form.email.value})`);
+      window.location.href = `mailto:harshavnaidu06@gmail.com?subject=${subject}&body=${body}`;
+    }
+    
+    // ========================= UTIL =========================
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+  </script>
+</body>
+</html>
